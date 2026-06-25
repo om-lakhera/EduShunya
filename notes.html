@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Library - EduShunya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#060B19',
+                            800: '#0B132B',
+                            700: '#142042'
+                        },
+                        neon: {
+                            blue: '#3b82f6',
+                            purple: '#a855f7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #060B19;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        
+        .glow-box-blue {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .glow-box-purple {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .gradient-bg-blue {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+        }
+
+        .gradient-bg-purple {
+            background: linear-gradient(135deg, #7e22ce, #a855f7);
+        }
+
+        .glass-card {
+            background: rgba(11, 19, 43, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500/30">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="location.href='index.html'">
+                    <img src="logo.jpg" alt="EduShunya Logo" class="w-10 h-10 rounded-lg object-cover object-top border border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                    <div>
+                        <h1 class="text-xl font-bold tracking-wider leading-tight text-white">EduShunya</h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:block h-full">
+                    <div class="ml-10 flex items-center space-x-8 text-sm font-medium h-full">
+                        <a href="index.html" class="text-gray-300 hover:text-blue-400 transition">Home</a>
+                        <a href="notes.html" class="text-white hover:text-blue-400 transition border-b-2 border-blue-500 py-6">Notes</a>
+                        <a href="quiz.html" class="text-gray-300 hover:text-blue-400 transition">Quiz Zone</a>
+                        <a href="https://www.youtube.com/@EduShunya" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-blue-400 transition">YouTube</a>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="https://www.youtube.com/@EduShunya" target="_blank" rel="noopener noreferrer" class="gradient-bg-blue hover:opacity-90 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition flex items-center gap-2 shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]">
+                        <i class="fa-brands fa-youtube"></i> Subscribe Free
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex lg:hidden">
+                    <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-navy-800 focus:outline-none transition">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="lg:hidden hidden bg-navy-900 border-t border-gray-800 absolute w-full shadow-2xl" id="mobile-menu">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="text-gray-300 hover:text-white hover:bg-navy-800 block px-3 py-2 rounded-md text-base font-medium transition">Home</a>
+                <a href="notes.html" class="text-white block px-3 py-2 rounded-md text-base font-medium bg-navy-800">Notes</a>
+                <a href="quiz.html" class="text-gray-300 hover:text-white hover:bg-navy-800 block px-3 py-2 rounded-md text-base font-medium transition">Quiz Zone</a>
+                <a href="https://www.youtube.com/@EduShunya" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white hover:bg-navy-800 block px-3 py-2 rounded-md text-base font-medium transition">YouTube</a>
+                <div class="pt-4 pb-2">
+                    <a href="https://www.youtube.com/@EduShunya" target="_blank" rel="noopener noreferrer" class="gradient-bg-blue text-white flex justify-center items-center px-4 py-3 rounded-xl text-base font-bold shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                        <i class="fa-brands fa-youtube mr-2"></i> Subscribe Free
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notes Page Header -->
+    <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8 text-center relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
+        <h1 class="text-4xl sm:text-5xl font-black mb-4 tracking-tight">
+            Resource & <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 drop-shadow-[0_0_15px_rgba(59,130,246,0.2)]">Notes Library</span>
+        </h1>
+        <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
+            Access, read, and download curated PDFs, notes, formulas, and PPT slides for CBSE Class 9 & 10.
+        </p>
+
+        <!-- Filters Grid -->
+        <div class="flex justify-center items-center gap-3 mt-10">
+            <button id="filter-all" class="filter-btn active px-6 py-2 text-sm font-bold rounded-full transition bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                All Classes
+            </button>
+            <button id="filter-9" class="filter-btn px-6 py-2 text-sm font-bold rounded-full transition bg-navy-800 border border-gray-700/80 text-gray-300 hover:text-white hover:border-blue-500/40">
+                Class 9
+            </button>
+            <button id="filter-10" class="filter-btn px-6 py-2 text-sm font-bold rounded-full transition bg-navy-800 border border-gray-700/80 text-gray-300 hover:text-white hover:border-purple-500/40">
+                Class 10
+            </button>
+        </div>
+    </header>
+
+    <!-- Notes Catalog Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Science Grid -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-xl bg-purple-900/40 flex items-center justify-center text-purple-400 text-xl border border-purple-500/30">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold tracking-wider uppercase text-white">Science Notes</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="science-notes-grid">
+                
+                <!-- Class 9 Science Note Card -->
+                <div class="note-card class-9 glass-card rounded-2xl p-6 border border-gray-800 hover:border-blue-500/40 transition duration-300 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-blue-600/20 text-blue-400 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-md border border-blue-500/20">Class 9</span>
+                            <span class="text-gray-500 text-xs font-semibold">Science</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 leading-snug group-hover:text-blue-400 transition">Exploring the World of Secondary Science</h3>
+                        <p class="text-gray-400 text-xs mb-6 font-medium leading-relaxed">Fundamental introduction to key biology, chemistry, and physics principles for Grade 9.</p>
+                    </div>
+                    <div class="space-y-2 mt-auto">
+                        <a href="#" class="w-full flex items-center justify-center gap-2 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/30 py-2.5 rounded-xl text-xs font-bold transition">
+                            <i class="fa-regular fa-file-pdf"></i> Download PDF
+                        </a>
+                        <div class="grid grid-cols-2 gap-2">
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-eye"></i> View
+                            </a>
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-file-powerpoint"></i> PPT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 10 Science Note Card 1 -->
+                <div class="note-card class-10 glass-card rounded-2xl p-6 border border-gray-800 hover:border-purple-500/40 transition duration-300 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-purple-600/20 text-purple-400 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-md border border-purple-500/20">Class 10</span>
+                            <span class="text-gray-500 text-xs font-semibold">Chemistry</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 leading-snug group-hover:text-purple-400 transition">Chemical Reactions & Equations</h3>
+                        <p class="text-gray-400 text-xs mb-6 font-medium leading-relaxed">Full concepts on balancing chemical equations, types of reactions, and redox reactions.</p>
+                    </div>
+                    <div class="space-y-2 mt-auto">
+                        <a href="#" class="w-full flex items-center justify-center gap-2 bg-purple-600/10 hover:bg-purple-600 text-purple-400 hover:text-white border border-purple-500/30 py-2.5 rounded-xl text-xs font-bold transition">
+                            <i class="fa-regular fa-file-pdf"></i> Download PDF
+                        </a>
+                        <div class="grid grid-cols-2 gap-2">
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-eye"></i> View
+                            </a>
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-file-powerpoint"></i> PPT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 10 Science Note Card 2 -->
+                <div class="note-card class-10 glass-card rounded-2xl p-6 border border-gray-800 hover:border-purple-500/40 transition duration-300 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-purple-600/20 text-purple-400 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-md border border-purple-500/20">Class 10</span>
+                            <span class="text-gray-500 text-xs font-semibold">Chemistry</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 leading-snug group-hover:text-purple-400 transition">Chemistry Fundamental Course</h3>
+                        <p class="text-gray-400 text-xs mb-6 font-medium leading-relaxed">Concept from Zero: Valency, formula writing, moles, and periodic classification basics.</p>
+                    </div>
+                    <div class="space-y-2 mt-auto">
+                        <a href="#" class="w-full flex items-center justify-center gap-2 bg-purple-600/10 hover:bg-purple-600 text-purple-400 hover:text-white border border-purple-500/30 py-2.5 rounded-xl text-xs font-bold transition">
+                            <i class="fa-regular fa-file-pdf"></i> Download PDF
+                        </a>
+                        <div class="grid grid-cols-2 gap-2">
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-eye"></i> View
+                            </a>
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-file-powerpoint"></i> PPT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mathematics Grid -->
+        <div>
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-xl bg-blue-900/40 flex items-center justify-center text-blue-400 text-xl border border-blue-500/30">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold tracking-wider uppercase text-white">Mathematics Notes</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="maths-notes-grid">
+                
+                <!-- Class 10 Mathematics Note Card -->
+                <div class="note-card class-10 glass-card rounded-2xl p-6 border border-gray-800 hover:border-purple-500/40 transition duration-300 flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-purple-600/20 text-purple-400 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-md border border-purple-500/20">Class 10</span>
+                            <span class="text-gray-500 text-xs font-semibold">Mathematics</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 leading-snug group-hover:text-purple-400 transition">Real Numbers Course Notes</h3>
+                        <p class="text-gray-400 text-xs mb-6 font-medium leading-relaxed">Notes covering Euclid's division lemma, fundamental theorem of arithmetic, and proofs of irrationality.</p>
+                    </div>
+                    <div class="space-y-2 mt-auto">
+                        <a href="#" class="w-full flex items-center justify-center gap-2 bg-purple-600/10 hover:bg-purple-600 text-purple-400 hover:text-white border border-purple-500/30 py-2.5 rounded-xl text-xs font-bold transition">
+                            <i class="fa-regular fa-file-pdf"></i> Download PDF
+                        </a>
+                        <div class="grid grid-cols-2 gap-2">
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-eye"></i> View
+                            </a>
+                            <a href="#" class="flex items-center justify-center gap-1.5 bg-navy-800 hover:bg-navy-700 text-gray-300 py-2 rounded-lg text-[10px] font-semibold transition border border-gray-700/60">
+                                <i class="fa-regular fa-file-powerpoint"></i> PPT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class 9 Mathematics Note Card (Future Slot Indicator) -->
+                <div class="note-card class-9 border-2 border-dashed border-gray-800 hover:border-blue-500/30 bg-transparent rounded-2xl p-6 flex flex-col items-center justify-center text-center h-full min-h-[220px] transition duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-950/20 border border-blue-500/10 flex items-center justify-center text-blue-400 mb-4">
+                        <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-gray-300">Class 9 Maths Notes</h3>
+                    <p class="text-[11px] text-gray-500 max-w-[180px] mt-1 leading-relaxed">This slot is reserved for upcoming Class 9 Mathematics Notes.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#030612] border-t border-gray-800/80 pt-16 pb-8 relative overflow-hidden mt-20">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mb-16">
+                <!-- Branding & Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="logo.jpg" alt="EduShunya Logo" class="w-12 h-12 rounded-xl object-cover object-top border border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                        <div>
+                            <h2 class="text-2xl font-bold tracking-wider text-white leading-tight">EduShunya</h2>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 font-medium">
+                        A free YouTube learning initiative for CBSE Class 9 & 10 students. Our mission is to make quality education accessible to every student.
+                    </p>
+                </div>
+
+                <!-- Follow Us -->
+                <div>
+                    <h3 class="text-white font-bold mb-6 uppercase tracking-widest text-sm drop-shadow-md">Follow Us</h3>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="https://t.me/edushunyaClass10" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white text-sm font-medium flex items-center gap-4 transition group">
+                                <div class="w-8 h-8 rounded-full bg-navy-800 border border-gray-700 flex items-center justify-center group-hover:border-blue-500/50 group-hover:bg-blue-500/10 transition">
+                                    <i class="fa-brands fa-telegram text-blue-400 text-sm pl-0.5"></i>
+                                </div>
+                                Telegram Class 10th
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://t.me/Edushunyaclass9th" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white text-sm font-medium flex items-center gap-4 transition group">
+                                <div class="w-8 h-8 rounded-full bg-navy-800 border border-gray-700 flex items-center justify-center group-hover:border-blue-500/50 group-hover:bg-blue-500/10 transition">
+                                    <i class="fa-brands fa-telegram text-blue-400 text-sm pl-0.5"></i>
+                                </div>
+                                Telegram Class 9th
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://whatsapp.com/channel/0029Vb8aKNBId7nDidvcxE1V" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white text-sm font-medium flex items-center gap-4 transition group">
+                                <div class="w-8 h-8 rounded-full bg-navy-800 border border-gray-700 flex items-center justify-center group-hover:border-green-500/50 group-hover:bg-green-500/10 transition">
+                                    <i class="fa-brands fa-whatsapp text-green-500 text-sm"></i>
+                                </div>
+                                WhatsApp
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://instagram.com/edushunya?igsh=MTBod2w5Z3dvamEzMA==" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white text-sm font-medium flex items-center gap-4 transition group">
+                                <div class="w-8 h-8 rounded-full bg-navy-800 border border-gray-700 flex items-center justify-center group-hover:border-pink-500/50 group-hover:bg-pink-500/10 transition">
+                                    <i class="fa-brands fa-instagram text-pink-500 text-sm"></i>
+                                </div>
+                                Instagram
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Stay Connected -->
+                <div>
+                    <h3 class="text-white font-bold mb-6 uppercase tracking-widest text-sm drop-shadow-md">Stay Connected</h3>
+                    <p class="text-gray-400 text-sm mb-5 font-medium leading-relaxed">Get updates about new lectures, notes and quizzes.</p>
+                    <form class="flex flex-col gap-3">
+                        <div class="relative">
+                            <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                            <input type="email" placeholder="Enter your email" class="w-full bg-navy-900 border border-gray-700 text-white pl-11 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition shadow-inner">
+                        </div>
+                        <button type="submit" class="w-full gradient-bg-blue hover:opacity-90 text-white py-3 rounded-xl text-sm font-bold transition shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-800/80 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-xs font-medium">
+                    &copy; 2026 EduShunya. All Rights Reserved.
+                </p>
+                <p class="text-gray-500 text-xs font-medium flex items-center gap-1.5">
+                    Made with <i class="fa-solid fa-heart text-red-500 text-[10px] animate-pulse"></i> for Students
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Button Logic
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = this.querySelector('i');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('animate-[slideDown_0.3s_ease-out_forwards]');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('animate-[slideDown_0.3s_ease-out_forwards]');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Filter Logic
+        const noteCards = document.querySelectorAll('.note-card');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active classes
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-blue-600', 'bg-purple-600', 'text-white');
+                    b.classList.add('bg-navy-800', 'text-gray-300');
+                });
+                
+                // Add active state to clicked button
+                this.classList.remove('bg-navy-800', 'text-gray-300');
+                this.classList.add('active', 'text-white');
+                if (this.id === 'filter-all') {
+                    this.classList.add('bg-blue-600');
+                } else if (this.id === 'filter-9') {
+                    this.classList.add('bg-blue-600');
+                } else if (this.id === 'filter-10') {
+                    this.classList.add('bg-purple-600');
+                }
+
+                const filterValue = this.id.replace('filter-', '');
+                
+                noteCards.forEach(card => {
+                    if (filterValue === 'all') {
+                        card.style.display = 'flex';
+                        card.classList.add('animate-[fadeIn_0.3s_ease-out]');
+                    } else {
+                        if (card.classList.contains(`class-${filterValue}`)) {
+                            card.style.display = 'flex';
+                            card.classList.add('animate-[fadeIn_0.3s_ease-out]');
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Add tailwind keyframes for slideDown and fadeIn
+        tailwind.config.theme.extend.keyframes = {
+            slideDown: {
+                '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+                '0%': { opacity: '0', transform: 'scale(0.95)' },
+                '100%': { opacity: '1', transform: 'scale(1)' }
+            }
+        };
+    </script>
+</body>
+</html>
